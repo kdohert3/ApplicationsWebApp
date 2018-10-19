@@ -2,7 +2,7 @@
 
 $top = '<!doctype html>
 <html lang="en">
-
+    
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,16 +10,16 @@ $top = '<!doctype html>
     <meta name="author" content="">
     <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="../../../../favicon.ico">
-
+    
     <title>Student Profile</title>
-
+    
     <!-- Bootstrap core CSS -->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
+    
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
   </head>
-
+    
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">'. (isset($_POST["Student_name"]) ? $_POST["Student_name"] : "Student name placeholder") .'</a>
@@ -29,7 +29,7 @@ $top = '<!doctype html>
         </li>
       </ul>
     </nav>
-
+          
     <div class="container-fluid" style = "padding-top: 42px;">
       <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -53,26 +53,26 @@ $top = '<!doctype html>
                   Applications
                 </a>
               </li>
-              
+          
             </ul>
-
-            
+          
+          
           </div>
         </nav>
-
+          
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <div class="btn-toolbar mb-2 mb-md-0">
             </div>
           </div>
-
+          
           
           <h2>Section title</h2>';
 
-     $content = '';
-          
-          
-$bottom = '          
+$content = '';
+
+
+$bottom = '
         </main>
       </div>
     </div>

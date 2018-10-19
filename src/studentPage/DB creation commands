@@ -1,0 +1,17 @@
+create DATABASE AppDB
+use AppDB
+create table schools (schoolName text, schoolSite text, imagePath text, Enrollment Int);
+insert into schools values ("UMB", "http://www.umaryland.edu/", "UMB.png", 6703);
+insert into schools values ("UMD", "http://www.umd.edu/", "UMD.jpeg", 40521);
+insert into schools values ("BSU", "https://www.bowiestate.edu/", "BSU.jpg", 6148);
+insert into schools values ("Towson", "https://www.towson.edu/", "towson.png", 22705);
+insert into schools values ("Frostburg", "https://www.frostburg.edu/", "Frostburg.png", 5396);
+insert into schools values ("Salisbury", "https://www.salisbury.edu/", "salisbury.png", 8714);
+insert into schools values ("CSU", "https://www.coppin.edu/", "CSU.png", 2893);
+insert into schools values ("UMBC", "https://www.umbc.edu/", "UMBC.png", 13662);
+insert into schools values ("UMUC", "https://www.umuc.edu/", "UMUC.png", 59379);
+
+
+
+
+create table applications (studentEmail text, schoolName text, status ENUM ('accepted','rejected','pending') default 'pending');
