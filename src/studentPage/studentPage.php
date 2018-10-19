@@ -1,5 +1,17 @@
 <?php
 
+ini_set('display_errors', 1); 
+error_reporting(-1);
+session_start();
+$user = "AppUser";
+$database = "AppDB";
+$dbpw = "testing";
+$table_schools = "schools";
+$table_applications = "applications";
+$db = connectToDB("localhost", $user, $dbpw, $database);
+$sqlQuery = sprintf("select * from ". $table_schools);
+$result = mysqli_query($db, $sqlQuery);
+
 $top = '<!doctype html>
 <html lang="en">
 
@@ -67,7 +79,7 @@ $top = '<!doctype html>
           </div>
 
           
-          <h2>Maryland Schools</h2>';
+          <h2>University System of Maryland</h2>';
 
      $content = '<div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -77,33 +89,63 @@ $top = '<!doctype html>
                   <th>School Image</th>
                   <th>Site</th>
                   <th>Enrollment</th>
-                  <th>Apply </th>
+                  <th style = "padding-left:14px;" >Apply </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody>';
+while ($recordArray = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+    $content .= '<tr>
+                  <td style = "vertical-align: middle">'.$recordArray["schoolName"].'</td>
+                  <td style = "vertical-align: middle"><img src='.$recordArray["imagePath"].' style="width:60px"></td>
+                  <td style = "vertical-align: middle"><a href="'.$recordArray["schoolSite"].'">'.$recordArray["schoolSite"].'</a></td>
+                  <td style = "vertical-align: middle">'.$recordArray["Enrollment"].'</td>
+                  <td style = "vertical-align: middle"><input type = checkbox style = "margin-left: 25px;" id = '.$recordArray["schoolName"].'CheckBox ></td>
+                </tr>';
+}
+$content .= '<tr>
+                  <td style = "vertical-align: middle"></td>
+                  <td style = "vertical-align: middle"></td>
+                  <td style = "vertical-align: middle"></td>
+                  <td style = "vertical-align: middle"></td>
+                  <td style = "vertical-align: middle"><input type="submit" name= "applicationSubmit" class="btn btn-outline-primary" value="Submit" /></td>
+                </tr>';
 
-// TO-DO for each school that student hasnt applied to:
-                <tr>
-                  <td style = "vertical-align: middle">UMD</td>
-                  <td style = "vertical-align: middle"><img src=UMD.jpeg style="width:60px"></td>
-                  <td style = "vertical-align: middle">www.umd.edu</td>
-                  <td style = "vertical-align: middle">40000</td>
-                  <td style = "vertical-align: middle"><input type = radio></td>
-                </tr>
-                
-                
+    
+$bottom = '
               </tbody>
             </table>
-          </div>';
+          </div>
           
           
-$bottom = '          
+          
         </main>
       </div>
     </div>
 ';
 
 echo $top.$content.$bottom;
+
+
+
+
+function prompt($prompt_msg)
+{
+    echo ("<script type='text/javascript'> var answer = prompt('" . $prompt_msg . "'); </script>");
+    
+    $answer = "<script type='text/javascript'> document.write(answer); </script>";
+    return ($answer);
+}
+
+
+function connectToDB($host, $user, $password, $database)
+{
+    $db = mysqli_connect($host, $user, $password, $database);
+    if (mysqli_connect_errno()) {
+        echo "Connect failed.\n" . mysqli_connect_error();
+        exit();
+    }
+    return $db;
+}
 ?>
     <!-- Bootstrap core JavaScript
     ================================================== -->
