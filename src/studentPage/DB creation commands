@@ -14,4 +14,4 @@ insert into schools values ("UMUC", "https://www.umuc.edu/", "UMUC.png", 59379);
 
 
 
-create table applications (studentEmail text, schoolName text, status ENUM ('accepted','rejected','pending') default 'pending');
+create table applications (studentEmail varchar(100), schoolName varchar(100), status ENUM ('accepted','rejected','pending') default 'pending', UNIQUE (studentEmail , schoolName));

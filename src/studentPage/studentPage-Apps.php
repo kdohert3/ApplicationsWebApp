@@ -1,5 +1,15 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(-1);
+session_start();
+$user = "AppUser";
+$database = "AppDB";
+$dbpw = "testing";
+$table_schools = "schools";
+$table_applications = "applications";
+$db = connectToDB("localhost", $user, $dbpw, $database);
+
 $top = '<!doctype html>
 <html lang="en">
     
@@ -67,9 +77,35 @@ $top = '<!doctype html>
           </div>
           
           
-          <h2>Section title</h2>';
+          <h2>Active Applications</h2>';
 
-$content = '';
+    $sqlQuery = sprintf("select schoolName, status FROM $table_applications where studentEmail = \"NAMEFROMPOST\"");
+    $result2 = mysqli_query($db, $sqlQuery);
+    if (mysqli_num_rows($result2)!=0) {
+        $content = '<div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>School</th>
+                  <th>Application Status</th>
+                </tr>
+              </thead>
+              <tbody>';
+        while ($recordArray = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+            $content .= '<tr>
+                  <td style = "vertical-align: middle">'.$recordArray["schoolName"].'</td>
+                  <td style = "vertical-align: middle">'.$recordArray["status"].' </td>';
+        }
+    } else {
+        $content = '<h1>No active applications</h1>';
+    }
+    
+    
+
+
+
+
+
 
 
 $bottom = '
@@ -79,6 +115,27 @@ $bottom = '
 ';
 
 echo $top.$content.$bottom;
+
+
+function prompt($prompt_msg)
+{
+    echo ("<script type='text/javascript'> var answer = prompt('" . $prompt_msg . "'); </script>");
+    
+    $answer = "<script type='text/javascript'> document.write(answer); </script>";
+    return ($answer);
+}
+
+
+function connectToDB($host, $user, $password, $database)
+{
+    $db = mysqli_connect($host, $user, $password, $database);
+    if (mysqli_connect_errno()) {
+        echo "Connect failed.\n" . mysqli_connect_error();
+        exit();
+    }
+    return $db;
+}
+
 ?>
     <!-- Bootstrap core JavaScript
     ================================================== -->

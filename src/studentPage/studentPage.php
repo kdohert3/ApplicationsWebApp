@@ -12,10 +12,23 @@ $db = connectToDB("localhost", $user, $dbpw, $database);
 $sqlQuery = sprintf("select * from ". $table_schools);
 $result = mysqli_query($db, $sqlQuery);
 
+
+if ( isset($_POST["applicationSubmit"])) {
+    foreach($_SESSION["schoolNames"] as $name) {
+        if (isset ($_POST[$name."CheckBox"])) {
+//             prompt("insert into $table_applications values (\"NAMEFROMPOST\", \"$name\", \"pending\");");
+            $sqlQuery = sprintf("insert into $table_applications values (\"NAMEFROMPOST\", \"$name\", \"pending\");");
+            $result3 = mysqli_query($db, $sqlQuery);
+        }
+    }
+}
+
+$_SESSION["schoolNames"] = [];
 $top = '<!doctype html>
 <html lang="en">
 
   <head>
+    <form action = "" method = "post">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -94,30 +107,43 @@ $top = '<!doctype html>
               </thead>
               <tbody>';
 while ($recordArray = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+    array_push($_SESSION["schoolNames"], $recordArray["schoolName"]);
     $content .= '<tr>
                   <td style = "vertical-align: middle">'.$recordArray["schoolName"].'</td>
                   <td style = "vertical-align: middle"><img src='.$recordArray["imagePath"].' style="width:60px"></td>
                   <td style = "vertical-align: middle"><a href="'.$recordArray["schoolSite"].'">'.$recordArray["schoolSite"].'</a></td>
                   <td style = "vertical-align: middle">'.$recordArray["Enrollment"].'</td>
-                  <td style = "vertical-align: middle"><input type = checkbox style = "margin-left: 25px;" id = '.$recordArray["schoolName"].'CheckBox ></td>
-                </tr>';
+                  <td style = "vertical-align: middle">';
+                  
+    $sqlQuery = sprintf("select * FROM $table_applications where studentEmail = \"NAMEFROMPOST\" and schoolName = \"".$recordArray["schoolName"]."\"");
+    $result2 = mysqli_query($db, $sqlQuery);
+    
+    if (mysqli_num_rows($result2)!=0){
+        $content.= '<h5>Applied<h5></td>';
+    } else {
+        $content.= '<input type = checkbox style = "margin-left: 25px;" name = '.$recordArray["schoolName"].'CheckBox ></td>';
+    }
+                  
+                  
+                  $content.= '</tr>';
 }
 $content .= '<tr>
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
-                  <td style = "vertical-align: middle"><input type="submit" name= "applicationSubmit" class="btn btn-outline-primary" value="Submit" /></td>
+                  <td style = "vertical-align: middle"> <input type="submit" name= "applicationSubmit" class="btn btn-outline-primary" value="Submit" /></td>
                 </tr>';
 
     
 $bottom = '
+
               </tbody>
             </table>
           </div>
           
           
-          
+           </form>
         </main>
       </div>
     </div>

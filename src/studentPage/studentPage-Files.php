@@ -79,6 +79,28 @@ $bottom = '
 ';
 
 echo $top.$content.$bottom;
+
+
+
+function prompt($prompt_msg)
+{
+    echo ("<script type='text/javascript'> var answer = prompt('" . $prompt_msg . "'); </script>");
+    
+    $answer = "<script type='text/javascript'> document.write(answer); </script>";
+    return ($answer);
+}
+
+
+function connectToDB($host, $user, $password, $database)
+{
+    $db = mysqli_connect($host, $user, $password, $database);
+    if (mysqli_connect_errno()) {
+        echo "Connect failed.\n" . mysqli_connect_error();
+        exit();
+    }
+    return $db;
+}
+
 ?>
     <!-- Bootstrap core JavaScript
     ================================================== -->
