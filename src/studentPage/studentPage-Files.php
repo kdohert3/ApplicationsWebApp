@@ -67,9 +67,30 @@ $top = '<!doctype html>
           </div>
 
           
-          <h2>Section title</h2>';
+          <h2>Your Application files</h2>';
+//TO-DO IF NO RESUME PRESENT
+if (isset($_POST["applicationEssay"])) {
+    $content = '<embed src="file_name.pdf" width="800px" height="2100px" />';
+} else {
+    $content = '
+                 <br/>
+                 <h5>Upload Resume:</h5>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="applicationEssay">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>';
+}
+$content .= '<br/><br/><br/>';
+if (isset($_POST["transcript"])) {
+    $content .= '<embed src="file_name.pdf" width="800px" height="2100px" />';
+} else {
+    $content .= '<h5>Upload Transcript:</h5>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="transcript">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>';
+}
 
-     $content = '';
           
           
 $bottom = '          
@@ -117,35 +138,6 @@ function connectToDB($host, $user, $password, $database)
     </script>
 
     <!-- Graphs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script>
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          datasets: [{
-            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-            lineTension: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#007bff',
-            borderWidth: 4,
-            pointBackgroundColor: '#007bff'
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: false
-              }
-            }]
-          },
-          legend: {
-            display: false,
-          }
-        }
-      });
-    </script>
+    
   </body>
 </html>

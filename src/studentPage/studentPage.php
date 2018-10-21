@@ -110,7 +110,7 @@ while ($recordArray = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
     array_push($_SESSION["schoolNames"], $recordArray["schoolName"]);
     $content .= '<tr>
                   <td style = "vertical-align: middle">'.$recordArray["schoolName"].'</td>
-                  <td style = "vertical-align: middle"><img src='.$recordArray["imagePath"].' style="width:60px"></td>
+                  <td style = "vertical-align: middle"><img src=../img/'.$recordArray["imagePath"].' style="width:60px"></td>
                   <td style = "vertical-align: middle"><a href="'.$recordArray["schoolSite"].'">'.$recordArray["schoolSite"].'</a></td>
                   <td style = "vertical-align: middle">'.$recordArray["Enrollment"].'</td>
                   <td style = "vertical-align: middle">';
@@ -187,36 +187,5 @@ function connectToDB($host, $user, $password, $database)
       feather.replace()
     </script>
 
-    <!-- Graphs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script>
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          datasets: [{
-            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-            lineTension: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#007bff',
-            borderWidth: 4,
-            pointBackgroundColor: '#007bff'
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: false
-              }
-            }]
-          },
-          legend: {
-            display: false,
-          }
-        }
-      });
-    </script>
   </body>
 </html>
