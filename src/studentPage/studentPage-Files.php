@@ -68,6 +68,8 @@ $top = '<!doctype html>
 
           
           <h2>Your Application files</h2>';
+
+
 //TO-DO IF NO RESUME PRESENT
 if (isset($_POST["applicationEssay"])) {
     $content = '<embed src="file_name.pdf" width="800px" height="2100px" />';

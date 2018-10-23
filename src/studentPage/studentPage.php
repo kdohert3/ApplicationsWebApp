@@ -132,7 +132,7 @@ $content .= '<tr>
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
-                  <td style = "vertical-align: middle"> <input type="submit" name= "applicationSubmit" class="btn btn-outline-primary" value="Submit" /></td>
+                  <td style = "vertical-align: middle; padding-top: 18px;"> <input type="submit" name= "applicationSubmit" class="btn btn-outline-primary" value="Submit" /></td>
                 </tr>';
 
     
