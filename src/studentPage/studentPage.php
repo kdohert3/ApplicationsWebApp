@@ -115,19 +115,24 @@ while ($recordArray = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                   <td style = "vertical-align: middle">'.$recordArray["Enrollment"].'</td>
                   <td style = "vertical-align: middle">';
                   
-    $sqlQuery = sprintf("select * FROM $table_applications where studentEmail = \"NAMEFROMPOST\" and schoolName = \"".$recordArray["schoolName"]."\"");
+    $sqlQuery = sprintf("select status FROM $table_applications where studentEmail = \"NAMEFROMPOST\" and schoolName = \"".$recordArray["schoolName"]."\"");
     $result2 = mysqli_query($db, $sqlQuery);
     
     if (mysqli_num_rows($result2)!=0){
-        $content.= '<h5>Applied<h5></td>';
+        $record2Array = mysqli_fetch_array($result2, MYSQLI_ASSOC);
+        if ($record2Array["status"] == "accepted") {
+            $content.= '<h5 style = "color: limegreen;">Accepted<h5></td>';
+        } else if ($record2Array["status"] == "rejected") {
+            $content.= '<h5 style = "color: orangered;">Rejected<h5></td>';
+        } else {
+            $content.= '<h5>Applied<h5></td>';
+        }
     } else {
         $content.= '<input type = checkbox style = "margin-left: 25px;" name = '.$recordArray["schoolName"].'CheckBox ></td>';
     }
-                  
-                  
-                  $content.= '</tr>';
+        $content.= '</tr>';
 }
-$content .= '<tr>
+        $content .= '<tr>
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
@@ -135,8 +140,7 @@ $content .= '<tr>
                   <td style = "vertical-align: middle; padding-top: 18px;"> <input type="submit" name= "applicationSubmit" class="btn btn-outline-primary" value="Submit" /></td>
                 </tr>';
 
-    
-$bottom = '
+        $bottom = '
 
               </tbody>
             </table>
@@ -151,9 +155,6 @@ $bottom = '
 
 echo $top.$content.$bottom;
 
-
-
-
 function prompt($prompt_msg)
 {
     echo ("<script type='text/javascript'> var answer = prompt('" . $prompt_msg . "'); </script>");
@@ -161,7 +162,6 @@ function prompt($prompt_msg)
     $answer = "<script type='text/javascript'> document.write(answer); </script>";
     return ($answer);
 }
-
 
 function connectToDB($host, $user, $password, $database)
 {
