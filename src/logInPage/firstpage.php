@@ -39,16 +39,18 @@
 				if ($db_connection->connect_error) 
 					die($db_connection->connect_error);
 				
-				# Unfinished
-				$hashed = password_hash(trim($_POST["password"], PASSWORD_DEFAULT);
-				$sqlQuery = sprintf("select * from %s where username='%s' and password='%s'", $table, trim($_POST["username"], " "), $hashed, " "));
+				$sqlQuery = sprintf("select password from %s where username='%s'", $table, trim($_POST["username"]));
 				$result = $db_connection->query($sqlQuery);
 				
 				if($result) {
 					$numberOfRows = $result->num_rows;
 					if ($numberOfRows != 0) {
-						header("Location: login.php");
-						exit;
+						$result->data_seek(0);
+						$row = $result->fetch_array(MYSQLI_ASSOC);
+						if(password_verify(trim($_POST["password"]), $row['password'])) {
+							header("Location: login.php");
+							exit;
+						}
 					}
 				} else 
 					die("Retrieval failed: ". $db_connection->error);
@@ -64,16 +66,21 @@
 			4. Should we hash the password? 
 			
 		To Do List:
-			1. Passwords should be hashed. Will have to change the storage space in SQL table. Let Michael know by recording steps to creation and sending it to him. 
-			2. Need to check if username or password is already taken.
+			1. Need to check if username or password is already taken.
+			2. Email must have certain formats. Look into all UMD school systems.
 			3. Put a fieldset around the new log in portion.
-			4. Email must have certain formats. Look into all UMD school systems.
+			
+		Done List:
+			1. Passwords is be hashed using PASSWORD_BCRYPT. 60 characters long. Let Michael know by recording steps to creation and sending it to him. 
+			
+		Discussion List:
+			1. Should we have a password to the admissions database?
 		-->
 		
 		<header id="header">
 			<h1 id="head">Maryland Universities Admissions Application</h1>
 		</header>
-		<!-- Action needed? -->
+		<!-- Action will need to change -->
 		<div id="left">
 		<?php
 			echo "<form name=\"log_in\" action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\" class=\"form-signin\">";
@@ -90,7 +97,7 @@
 		</form>
 		</div>
 		
-		<!-- Action needed? -->
+		<!-- Action will need to change -->
 		<div id="right">
 		<form name="signUp" action="process.php" onsubmit="return alertUserCreate()" class="form-signin" method="post">
 			<h2 id="thirdHead" class="h3 mb-3 font-weight-normal">New to the system? Create an account today!</h2>
