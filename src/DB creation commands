@@ -1,5 +1,5 @@
-create DATABASE Applications
-use Applications
+create DATABASE admissions
+use admissions
 
 // schools table
 create table schools (schoolName text, schoolSite text, imagePath text, Enrollment Int);
@@ -17,4 +17,4 @@ insert into schools values ("UMUC", "https://www.umuc.edu/", "UMUC.png", 59379);
 create table applications (studentEmail varchar(100), schoolName varchar(100), status ENUM ('accepted','rejected','pending') default 'pending', UNIQUE (studentEmail , schoolName));
 
 // users table
-create table users ();
+create table users (email varchar(30) primary key not null, username enum('student', 'counselor', 'administrator'), school varchar(30), resume varchar(35), );
