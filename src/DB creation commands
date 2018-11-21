@@ -17,4 +17,5 @@ insert into schools values ("UMUC", "https://www.umuc.edu/", "UMUC.png", 59379);
 create table applications (studentEmail varchar(100), schoolName varchar(100), status ENUM ('accepted','rejected','pending') default 'pending', UNIQUE (studentEmail , schoolName));
 
 // users table
-create table users (email varchar(30) primary key not null, usertype enum('student', 'counselor', 'administrator'), school varchar(30), resume varchar(35), transcript varchar(35), username varchar(30), password varchar(60));
+create table users (email varchar(30) primary key not null, usertype enum('student', 'counselor', 'administrator'), school varchar(30), resume varchar(35), transcript varchar(35), password varchar(60), username varchar(30));
+insert into users values ("master.admin@umd.edu", "administrator", null, null, null, "password", "mainAdmin");
