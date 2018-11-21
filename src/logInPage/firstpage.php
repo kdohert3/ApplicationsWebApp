@@ -25,6 +25,7 @@
 
 	<body>
 		<?php 
+			# Make sure the others use a $session_start() of some sort!
 			if(!isset($_SESSION)) 
 				session_start();
 			
@@ -48,7 +49,8 @@
 						$result->data_seek(0);
 						$row = $result->fetch_array(MYSQLI_ASSOC);
 						if(password_verify(trim($_POST["password"]), $row['password'])) {
-							header("Location: login.php");
+							# HERE
+							header("Location: ../studentPage/studentPage.php");
 							exit;
 						}
 					}
@@ -57,38 +59,16 @@
 			}
 		?>
 		
-		<!--
-		Issues to address:
-			1. Where the files and bootstrap will be placed relative to each other.
-			2. How I will avoid having students realize that there is no counselor / admin option using our current approach.
-				2.5. My proposition is that the counselors and admins have a log in already and do not need to sign up to begin with.
-			3. Coordinate with Kevin to do email confirmation if we can figure out a mail server. 
-			4. Should we hash the password? 
-			
-		To Do List:
-			1. Need to check if username or password is already taken.
-			2. Email must have certain formats. Look into all UMD school systems.
-			3. Put a fieldset around the new log in portion.
-			
-		Done List:
-			1. Passwords is be hashed using PASSWORD_BCRYPT. 60 characters long. Let Michael know by recording steps to creation and sending it to him. 
-			
-		Discussion List:
-			1. Should we have a password to the admissions database?
-		-->
-		
 		<header id="header">
 			<h1 id="head">Maryland Universities Admissions Application</h1>
 		</header>
-		<!-- Action will need to change -->
 		<div id="left">
 		<?php
 			echo "<form name=\"log_in\" action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\" class=\"form-signin\">";
 			$_SESSION["tryAgain"] = true;
 			
-			if(isset($_POST["username"]) && isset($_POST["password"])) {
+			if(isset($_POST["username"]) && isset($_POST["password"])) 
 				echo "<h4 style='color:RED;'>Login Information Incorrect!</h4>";
-			}
 		?>
 			<h2 id="secondHead" class="h3 mb-3 font-weight-normal">Log In</h2>
 			<input type="text" class="form-control" name="username" maxlength="30" size="20" placeholder="User Name" required autofocus>
@@ -97,9 +77,14 @@
 		</form>
 		</div>
 		
-		<!-- Action will need to change -->
 		<div id="right">
 		<form name="signUp" action="process.php" onsubmit="return alertUserCreate()" class="form-signin" method="post">
+		<?php
+			if(isset($_SESSION["creationFail"]) && $_SESSION["creationFail"]) {
+				echo "<h4 style='color:RED;'>Account Creation Failed...!</h4>";
+				$_SESSION["creationFail"] = false;
+			}
+		?>
 			<h2 id="thirdHead" class="h3 mb-3 font-weight-normal">New to the system? Create an account today!</h2>
 			<!-- <fieldset> -->
 			User Name

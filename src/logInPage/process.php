@@ -29,17 +29,18 @@
 			$usertype = 'student';
 			
 			$hashed = password_hash($password, PASSWORD_BCRYPT);
-			$sqlQuery = sprintf("insert into $table (email, usertype, school, resume, transcript, username, password) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", $email, $usertype, null, null, null, $username, $hashed);
+			$sqlQuery = sprintf("insert into $table (email, usertype, school, resume, transcript, password, username) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", $email, $usertype, null, null, null, $hashed, $username);
 			$result = $db_connection->query($sqlQuery);
-			if(!$result) 
-				die($db_connection->error);
+			if(!$result) {
+				$_SESSION["creationFail"] = true;
+				header("Location: firstpage.php");
+			} else {
+				$_SESSION["creationFail"] = false;
+				$_SESSION["tryAgain"] = false;
+				header("Location: ../studentPage/studentPage.php");
+			}
 			
 			$db_connection->close();
-			
-			# This would direct to Kevin's page
-			# header("Location: ???.php");
 		?>
-		
-		<!--<h1> Entry Added </h1>-->
    </body>
 </html>
