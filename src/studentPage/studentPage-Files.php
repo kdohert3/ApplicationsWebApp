@@ -1,5 +1,20 @@
 <?php
 
+
+session_start();
+$user = "AppUser";
+$database = "admissions";
+$dbpw = "testing";
+$table_users = "users";
+$db = connectToDB("localhost", $user, $dbpw, $database);
+$sqlQuery = sprintf("select resume from ". $table_users. "where username = " .$_POST["Student_name"]);
+// $resume = mysqli_query($db, $sqlQuery);
+$resume = "../img/lorem-ipsum.pdf";
+$sqlQuery = sprintf("select transcript from ". $table_users. "where username = " .$_POST["Student_name"]);
+// $transcript = mysqli_query($db, $sqlQuery);
+$transcript = "../img/lorem-ipsum.pdf";
+
+
 $top = '<!doctype html>
 <html lang="en">
 
@@ -22,7 +37,7 @@ $top = '<!doctype html>
 
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">'. (isset($_POST["Student_name"]) ? $_POST["Student_name"] : "Student name placeholder") .'</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">'. (isset($_POST["Student_name"]) ? $_POST["Student_name"] : "Kevin Doherty") .'</a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="../main.php">Sign out</a>
@@ -47,12 +62,6 @@ $top = '<!doctype html>
                   Files
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="studentPage-Apps.php">
-                  <span data-feather="send"></span>
-                  Applications
-                </a>
-              </li>
               
             </ul>
 
@@ -67,35 +76,52 @@ $top = '<!doctype html>
           </div>
 
           
-          <h2>Your Application files</h2>';
+          <h2>Your Application files</h2>
+          <div class = "row">
+          <div class = "col">';
 
 
 //TO-DO IF NO RESUME PRESENT
-if (isset($_POST["applicationEssay"])) {
-    $content = '<embed src="file_name.pdf" width="800px" height="2100px" />';
+if ($resume) {
+    $content = '<br/>
+                <h5> Resume: </h5>
+                 <embed src="'.$resume.'" width = 100% height = 1000px />';
 } else {
     $content = '
                  <br/>
                  <h5>Upload Resume:</h5>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="applicationEssay">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        <input type="file" class="custom-file-input" id="resume" name = "resume" accept = ".pdf">
+                            <label id = "resumeLabel" for= "resume" class="custom-file-label" >Choose File</label>
                     </div>';
 }
-$content .= '<br/><br/><br/>';
-if (isset($_POST["transcript"])) {
-    $content .= '<embed src="file_name.pdf" width="800px" height="2100px" />';
+$content .= '</div><div class = "col">';
+if ($transcript) {
+    $content .= '<br>
+                <h5> Transcript: </h5>
+                <embed src="'.$transcript.'"  width = 100% height = 1000px" />';
 } else {
-    $content .= '<h5>Upload Transcript:</h5>
+    $content .= '<br><h5>Upload Transcript:</h5>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="transcript">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
+                        <input type="file" required class="custom-file-input" id="transcript" accept = ".pdf">
+                        <label id="transcriptLabel" class="custom-file-label" accept=".pdf">Choose file</label>
                     </div>';
 }
 
+$content .= '</div>
+           </div>';
+    
+
+if (!$transcript || !$resume) {
+    $content .= '<br/><br/>
+                 <form action = "" method = "post"> 
+                 <input type="button" id = "submitButton" name= "submitButton" class="btn btn-outline-primary" value="Submit new files" style = "width: 100%;"/>
+                 </form>';
+}
           
           
-$bottom = '          
+$bottom = '</div>
+           </div>          
         </main>
       </div>
     </div>
@@ -132,11 +158,45 @@ function connectToDB($host, $user, $password, $database)
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="../../assets/js/vendor/popper.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
-
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script> feather.replace()</script>
     <script>
-      feather.replace()
+    
+    document.getElementById("resume").addEventListener( 'change', showResumeName );
+    document.getElementById("transcript").addEventListener( 'change', showTranscriptName );
+    
+    function showResumeName(event) {
+      var input = event.srcElement;
+      var fileName = input.files[0].name;
+      document.getElementById("resumeLabel").innerHTML = fileName;
+    }
+
+    function showTranscriptName(event) {
+        var input = event.srcElement;
+        var fileName = input.files[0].name;
+        document.getElementById("transcriptLabel").innerHTML = fileName;
+      }
+    
+    function getResumeValue() {
+		var resumeField = document.getElementById("resume");
+		prompt (resumeField.value);
+        }
+
+    function submitFileNames() {
+    	var resumeField = document.getElementById("resume").value;
+    	var transcriptField = document.getElementById("transcript").value;
+    	
+		var resumeArray = resumeField.split("\\");
+    	var transcriptArray = transcriptField.split("\\");
+
+    	var resumeName = resumeArray[resumeArray.length-1];
+    	var transcriptName = transcriptArray[transcriptArray.length-1];
+    	prompt(resumeName);
+	}
+     
+      document.getElementById("submitButton").addEventListener("click", submitFileNames, false);
+     
     </script>
 
     <!-- Graphs -->
