@@ -40,7 +40,8 @@
 				if ($db_connection->connect_error) 
 					die($db_connection->connect_error);
 				
-				$sqlQuery = sprintf("select password from %s where username='%s'", $table, trim($_POST["username"]));
+				$userName = trim($_POST["username"]);
+				$sqlQuery = sprintf("select password, usertype from %s where username='%s'", $table, $userName);
 				$result = $db_connection->query($sqlQuery);
 				
 				if($result) {
@@ -48,10 +49,21 @@
 					if ($numberOfRows != 0) {
 						$result->data_seek(0);
 						$row = $result->fetch_array(MYSQLI_ASSOC);
-						if(password_verify(trim($_POST["password"]), $row['password'])) {
-							# HERE
-							header("Location: ../studentPage/studentPage.php");
-							exit;
+						if($userName != "mainAdmin") {
+							if(password_verify(trim($_POST["password"]), $row['password'])) {
+								if($row['usertype'] == "student")
+									header("Location: ../studentPage/studentPage.php");
+								else if($row['usertype'] == "counselor")
+									header("Location: ../counselorPage/counselorPage.php");
+								else
+									header("Location: ../adminPage/adminPage.php");
+								exit;
+							}
+						} else {
+							if($row['password'] == "password") {
+								header("Location: ../adminPage/adminPage.php");
+								exit;
+							}
 						}
 					}
 				} else 
