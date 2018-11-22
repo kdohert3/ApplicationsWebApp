@@ -8,11 +8,19 @@ $dbpw = "testing";
 $table_users = "users";
 $db = connectToDB("localhost", $user, $dbpw, $database);
 $sqlQuery = sprintf("select resume from ". $table_users. "where username = " .$_POST["Student_name"]);
-// $resume = mysqli_query($db, $sqlQuery);
-$resume = "../img/lorem-ipsum.pdf";
+$resume = mysqli_query($db, $sqlQuery);
+// $resume = "../img/lorem-ipsum.pdf";
 $sqlQuery = sprintf("select transcript from ". $table_users. "where username = " .$_POST["Student_name"]);
-// $transcript = mysqli_query($db, $sqlQuery);
-$transcript = "../img/lorem-ipsum.pdf";
+$transcript = mysqli_query($db, $sqlQuery);
+// $transcript = "../img/lorem-ipsum.pdf";
+
+if (isset($_POST["submitButton"])){
+    $resume = end(explode("\\", $_POST["resume"]));
+    $transcript = end(explode("\\", $_POST["transcript"]));
+    $_SESSION["resumeFile"] = $resume;
+    $_SESSION["transcriptFile"] = $transcript;
+    prompt($_SESSION["resumeFile"]);
+}
 
 
 $top = '<!doctype html>
@@ -78,14 +86,15 @@ $top = '<!doctype html>
           
           <h2>Your Application files</h2>
           <div class = "row">
-          <div class = "col">';
+          <div class = "col">
+          <form action = "" method = "post">';
 
 
 //TO-DO IF NO RESUME PRESENT
 if ($resume) {
     $content = '<br/>
                 <h5> Resume: </h5>
-                 <embed src="'.$resume.'" width = 100% height = 1000px />';
+                 <embed src="../img/'.$resume.'" width = 100% height = 1000px />';
 } else {
     $content = '
                  <br/>
@@ -99,11 +108,11 @@ $content .= '</div><div class = "col">';
 if ($transcript) {
     $content .= '<br>
                 <h5> Transcript: </h5>
-                <embed src="'.$transcript.'"  width = 100% height = 1000px" />';
+                <embed src="../img/'.$transcript.'"  width = 100% height = 1000px" />';
 } else {
     $content .= '<br><h5>Upload Transcript:</h5>
                     <div class="custom-file">
-                        <input type="file" required class="custom-file-input" id="transcript" accept = ".pdf">
+                        <input type="file" required class="custom-file-input" id="transcript" name = "transcript" accept = ".pdf">
                         <label id="transcriptLabel" class="custom-file-label" accept=".pdf">Choose file</label>
                     </div>';
 }
@@ -114,8 +123,8 @@ $content .= '</div>
 
 if (!$transcript || !$resume) {
     $content .= '<br/><br/>
-                 <form action = "" method = "post"> 
-                 <input type="button" id = "submitButton" name= "submitButton" class="btn btn-outline-primary" value="Submit new files" style = "width: 100%;"/>
+                  
+                    <input type="submit" id = "submitButton" name= "submitButton" class="btn btn-outline-primary" value="Submit new files" style = "width: 100%;"/>
                  </form>';
 }
           
@@ -183,19 +192,22 @@ function connectToDB($host, $user, $password, $database)
 		prompt (resumeField.value);
         }
 
-    function submitFileNames() {
+    function submitResumeName() {
     	var resumeField = document.getElementById("resume").value;
-    	var transcriptField = document.getElementById("transcript").value;
     	
 		var resumeArray = resumeField.split("\\");
-    	var transcriptArray = transcriptField.split("\\");
 
     	var resumeName = resumeArray[resumeArray.length-1];
-    	var transcriptName = transcriptArray[transcriptArray.length-1];
-    	prompt(resumeName);
+    	
+	}
+
+    function submitTranscriptName() {
+    	var transcriptField = document.getElementById("transcript").value;
+    	var transcriptArray = transcriptField.split("\\");
+		var transcriptName = transcriptArray[transcriptArray.length-1];
+    	
 	}
      
-      document.getElementById("submitButton").addEventListener("click", submitFileNames, false);
      
     </script>
 

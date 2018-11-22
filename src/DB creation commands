@@ -1,5 +1,10 @@
 create DATABASE admissions
 use admissions
+<<<<<<< HEAD
+=======
+
+// schools table
+>>>>>>> 4d689afe204df85afb1c89c3154bbc994d74f10e
 create table schools (schoolName text, schoolSite text, imagePath text, Enrollment Int);
 insert into schools values ("UMB", "http://www.umaryland.edu/", "UMB.png", 6703);
 insert into schools values ("UMD", "http://www.umd.edu/", "UMD.jpeg", 40521);
@@ -11,7 +16,9 @@ insert into schools values ("CSU", "https://www.coppin.edu/", "CSU.png", 2893);
 insert into schools values ("UMBC", "https://www.umbc.edu/", "UMBC.png", 13662);
 insert into schools values ("UMUC", "https://www.umuc.edu/", "UMUC.png", 59379);
 
-
-
-
+// applications table
 create table applications (studentEmail varchar(100), schoolName varchar(100), status ENUM ('accepted','rejected','pending') default 'pending', UNIQUE (studentEmail , schoolName));
+
+// users table
+create table users (email varchar(30) primary key not null, usertype enum('student', 'counselor', 'administrator'), school varchar(30), resume varchar(35), transcript varchar(35), password varchar(60), username varchar(30) primary key not null);
+insert into users values ("master.admin@umd.edu", "administrator", null, null, null, "password", "mainAdmin");

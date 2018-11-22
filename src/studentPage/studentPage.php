@@ -131,12 +131,24 @@ while ($recordArray = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
                   <td style = "vertical-align: middle"></td>
-                  <td style = "vertical-align: middle"></td>
-                  <td style = "vertical-align: middle; padding-top: 18px;"> <input type="submit" name= "applicationSubmit" class="btn btn-outline-primary" value="Submit" /></td>
-                </tr>';
+                  <td style = "vertical-align: middle"></td>';
+        
+        prompt($_SESSION["resumeFile"]);
+        if ($_SESSION["resumeFile"] != "" && $_SESSION["transcriptFile"] != "") {
+            $content.= '
+                  <td style = "vertical-align: middle; padding-top: 18px;"> <input type="submit" name= "applicationSubmit" class="btn btn-outline-primary" value="Submit" /></td>';
+        }
+        else {
+           
+            $content.= '
+                  <td style = "vertical-align: middle; padding-top: 18px;"> <input type="button" name= "goToFiles" class="btn btn-outline-primary" value="Upload Resume" onclick = "navToFiles()"/></td>
+            ';
+        }
+        
+           
 
         $bottom = '
-
+                    </tr>
               </tbody>
             </table>
           </div>
@@ -180,6 +192,10 @@ function connectToDB($host, $user, $password, $database)
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
       feather.replace()
+      
+      function navToFiles() {
+			window.location.href = 'studentPage-Files.php';
+      }
     </script>
 
   </body>
