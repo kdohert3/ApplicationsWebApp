@@ -1,5 +1,5 @@
-create DATABASE Applications
-use Applications
+create DATABASE admissions
+use admissions
 create table schools (schoolName text, schoolSite text, imagePath text, Enrollment Int);
 insert into schools values ("UMB", "http://www.umaryland.edu/", "UMB.png", 6703);
 insert into schools values ("UMD", "http://www.umd.edu/", "UMD.jpeg", 40521);

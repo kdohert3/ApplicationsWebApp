@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(-1);
 session_start();
 $user = "AppUser";
-$database = "AppDB";
+$database = "admissions";
 $dbpw = "testing";
 $table_schools = "schools";
 $table_applications = "applications";
@@ -36,7 +36,7 @@ $top = '<!doctype html>
     <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Student Profile</title>
+    <title>Student Portal</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
@@ -47,10 +47,10 @@ $top = '<!doctype html>
 
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">'. (isset($_POST["Student_name"]) ? $_POST["Student_name"] : "TO-DO STUDENT NAME FROM POST") .'</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">'. (isset($_POST["Student_name"]) ? $_POST["Student_name"] : "Kevin Doherty") .'</a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="../main.php">Sign out</a>
+          <a class="nav-link" href="../main.php">Sign out</a> 
         </li>
       </ul>
     </nav>
@@ -72,12 +72,7 @@ $top = '<!doctype html>
                   Files
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="studentPage-Apps.php">
-                  <span data-feather="send"></span>
-                  Applications
-                </a>
-              </li>
+              
               
             </ul>
 
