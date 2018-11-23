@@ -17,7 +17,7 @@
     <center>
     <b>Would you like to create or remove an administrator/counselor?</b>
     <br /> <br />
-    
+
     <form action="create.php" method="post">
       <div class="form-group">
         <input type="submit" value="Create">

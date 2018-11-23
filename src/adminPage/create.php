@@ -30,17 +30,22 @@
 
       <div class="form-group">
         <label for="username">User Name:</label><br>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required>
       </div>
 
       <div class="form-group">
         <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required>
       </div>
 
       <div class="form-group">
-        <label for="confirmPassword">Confirm Confirm:</label><br>
-        <input type="password" id="confirmPassword" name="cofirmPassword">
+        <label for="confirmPassword">Confirm Password:</label><br>
+        <input type="password" id="confirmPassword" name="cofirmPassword" required>
       </div>
 
       <div class="form-group">
