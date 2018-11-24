@@ -7,6 +7,8 @@
 
     <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="../signin.css?v=1" rel="stylesheet">
+
+    <script src="createValidation.js"></script>
   </head>
 
   <body>

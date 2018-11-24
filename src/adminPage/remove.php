@@ -25,11 +25,6 @@
       </div>
 
       <div class="form-group">
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required>
-      </div>
-
-      <div class="form-group">
         <input type="submit" value="Remove">
       </div>
     </form>
